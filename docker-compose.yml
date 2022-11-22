@@ -1,0 +1,49 @@
+version: "2"
+services:
+  db:
+    image: postgres
+    container_name: db-ruby
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: 'trust'
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DATABASET: projectruby
+  
+    volumes:
+      - ./db-dev-data:/var/lib/postgresql/data
+    networks:
+      - bestarion_app
+  app:
+    image: intern-be-2022:latest
+    container_name: be-ruby
+    build: ./intern-be-2022
+    env_file:
+      - ./intern-be-2022/.env
+    ports:
+      - 3005:3000
+    depends_on:
+      - db
+    networks:
+      - bestarion_app
+    volumes:
+      - ./intern-be-2022:/intern-be-2022
+    
+  web:
+    image: intern-fe-2022:latest
+    container_name: fe-ruby
+    build: ./intern-fe-2022
+    ports:
+      - 3004:3000
+    networks:
+      - bestarion_app
+    volumes:
+      - ./intern-fe-2022:/app
+
+
+volumes:
+  db-dev-data:
+    name: db-dev-data
+
+networks:
+  bestarion_app:
+    external: true

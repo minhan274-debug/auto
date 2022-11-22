@@ -1,0 +1,19 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: projectruby
+  host: db
+  port: 5432
+  pool: 5
+  username: postgres
+  password: 123456
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: projectruby
+  host: 172.16.9.77
+  port: 5432
+  pool: 5
+  username: postgres
+  password: 123456
